@@ -1,6 +1,6 @@
 # 4. Diagramas de Proceso
 
-Esta sección detalla los flujos de trabajo más importantes implementados en el sistema, mostrando la lógica del controlador y las interacciones con la capa DAO.
+Esta sección detalla los flujos de trabajo (procesos de negocio) más importantes implementados en el sistema, mostrando la lógica del controlador y las interacciones con la capa DAO.
 
 ## 1. Proceso: Realizar Préstamo
 
@@ -31,31 +31,19 @@ Este es el proceso central del sistema. Involucra la validación de inventario y
 
 ```mermaid
 graph TD
-    A[Inicio: Panel Préstamos] --> B{Ingresa ID Libro, ID Usuario};
-    B --> C[Clic en 'Realizar Préstamo'];
-    C --> D{¿Datos válidos (no vacíos, numéricos)?};
-    D -- No --> E[Error: "IDs y días deben ser números válidos"];
-    D -- Sí --> F[Buscar Usuario por ID (DAO)];
-    F --> G{¿Usuario existe?};
-    G -- No --> H[Error: "El usuario no existe"];
-    G -- Sí --> I[Buscar Libro por ID (DAO)];
-    I --> J{¿Libro existe?};
-    J -- No --> K[Error: "El libro no existe"];
-    J -- Sí --> L{¿Libro.disponibles > 0?};
-    L -- No --> M[Error: "No hay ejemplares disponibles"];
-    L -- Sí --> N[1. Guardar Préstamo en BD (DAO)];
-    N --> O[2. Actualizar Libro: disponibles = disponibles - 1 (DAO)];
-    O --> P[Éxito: "Préstamo realizado"];
-    P --> Q[Fin];
-
-graph TD
-    A[Inicio: Pestaña "Préstamos Activos"] --> B[Selecciona un préstamo de la tabla];
-    B --> C[Clic en 'Registrar Devolución'];
-    C --> D[Obtener 'prestamoId' y 'libroId' de la fila];
-    D --> E[1. Actualizar Préstamo a "DEVUELTO" (DAO)];
-    E --> F[2. Obtener Libro por 'libroId' (DAO)];
-    F --> G[3. Actualizar Libro: disponibles = disponibles + 1 (DAO)];
-    G --> H[Éxito: "Devolución registrada"];
-    H --> I[Actualizar listas en la Vista];
-
-    I --> J[Fin];
+    A["Inicio: Panel Préstamos"] --> B{"Ingresa ID Libro, ID Usuario"};
+    B --> C["Clic en 'Realizar Préstamo'"];
+    C --> D{"¿Datos válidos (no vacíos, numéricos)?"};
+    D -- No --> E["Error: IDs y días deben ser números válidos"];
+    D -- Sí --> F["Buscar Usuario por ID (DAO)"];
+    F --> G{"¿Usuario existe?"};
+    G -- No --> H["Error: El usuario no existe"];
+    G -- Sí --> I["Buscar Libro por ID (DAO)"];
+    I --> J{"¿Libro existe?"};
+    J -- No --> K["Error: El libro no existe"];
+    J -- Sí --> L{"¿Libro.disponibles > 0?"};
+    L -- No --> M["Error: No hay ejemplares disponibles"];
+    L -- Sí --> N["1. Guardar Préstamo en BD (DAO)"];
+    N --> O["2. Actualizar Libro: disponibles = disponibles - 1 (DAO)"];
+    O --> P["Éxito: Préstamo realizado"];
+    P --> Q["Fin"];
