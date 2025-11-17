@@ -1,6 +1,6 @@
 # 4. Diagramas de Proceso
 
-Esta sección detalla los flujos de trabajo (procesos de negocio) más importantes implementados en el sistema, mostrando la lógica del controlador y las interacciones con la capa DAO.
+Esta sección detalla los flujos de trabajo más importantes implementados en el sistema, mostrando la lógica del controlador y las interacciones con la capa DAO.
 
 ## 1. Proceso: Realizar Préstamo
 
@@ -57,4 +57,5 @@ graph TD
     F --> G[3. Actualizar Libro: disponibles = disponibles + 1 (DAO)];
     G --> H[Éxito: "Devolución registrada"];
     H --> I[Actualizar listas en la Vista];
+
     I --> J[Fin];
